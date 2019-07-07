@@ -16,10 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, 
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let homeViewController = UIViewController()
-        homeViewController.view.backgroundColor = UIColor.red
-        window!.rootViewController = homeViewController
+        let viewController = self.makeHomeViewController()
+        window!.rootViewController = viewController
         window!.makeKeyAndVisible()
         return true
+    }
+}
+
+private extension AppDelegate {
+    
+    func makeHomeViewController() -> UIViewController {
+        let viewController = PokemonListViewController()
+        return viewController
     }
 }
