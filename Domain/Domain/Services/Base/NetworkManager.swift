@@ -10,7 +10,8 @@ import Foundation
 
 public final class NetworkManager {
     
-    public class func request<T: Codable>(route: NetworkRoute, completion: @escaping (Result<T, Error>) -> ()) {
+    public class func request<T: Codable>(route: NetworkRoute, 
+                                          completion: @escaping (Result<T, Error>) -> ()) {
         var components = URLComponents()
         components.scheme = route.scheme
         components.host = route.host
@@ -32,7 +33,8 @@ public final class NetworkManager {
                 return
             }
             
-            //debugPrint(data?.prettyPrintedJSONString ?? "nil")
+            // TODO: Remove
+            debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {
                 return
@@ -51,6 +53,7 @@ public final class NetworkManager {
                 }
             } catch {
                 completion(.failure(error))
+                print(String(describing: error))
             }
         }
         dataTask.resume()
@@ -58,7 +61,7 @@ public final class NetworkManager {
 }
 
 // MARK: Pretty printed JSON
-extension Data {
+private extension Data {
     
     var prettyPrintedJSONString: NSString? {
         guard let object = try? JSONSerialization.jsonObject(with: self, options: []),

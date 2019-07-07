@@ -10,12 +10,14 @@ import Foundation
 
 public protocol GetPokemonService {
     
+    var onComplete: ((Result<Pokemon, Error>) -> ())? { get }
+    
     func execute(id: Int)
 }
 
 public class GetPokemonServiceImp: GetPokemonService {
     
-    var onComplete: ((Result<Pokemon, Error>) -> ())?
+    public var onComplete: ((Result<Pokemon, Error>) -> ())?
     
     public func execute(id: Int) {
         let route = GetPokemonDetailRoute(id: id)
@@ -23,10 +25,12 @@ public class GetPokemonServiceImp: GetPokemonService {
             self?.onComplete?(result)
         }
     }
+    
+    public init() {}
 }
 
 public struct GetPokemonDetailRoute: NetworkRoute {
-    public var path: String { return "/api/v2/pokemon/\(self.id)/" }
+    public var path: String { return "/api/\(ApiConstants.version)/pokemon/\(self.id)/" }
     public var method: String { return "GET" }
     
     private let id: Int

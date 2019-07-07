@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Domain
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, 
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = self.makeHomeViewController()
-        window!.rootViewController = viewController
+        let viewController = self.makeListViewController()
+        window!.rootViewController = UINavigationController(rootViewController: viewController)
         window!.makeKeyAndVisible()
         return true
     }
@@ -25,8 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     
-    func makeHomeViewController() -> UIViewController {
-        let viewController = PokemonListViewController()
+    func makeListViewController() -> UIViewController {
+        let viewModel = PokemonListViewModel(service: GetPokemonListServiceImp())
+        let viewController = PokemonListViewController(viewModel: viewModel)
         return viewController
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class PokemonListViewController: UINavigationController {
+final class PokemonListViewController: UIViewController {
     
     private var viewModel: PokemonListViewModel
     
@@ -36,16 +36,53 @@ final class PokemonListViewController: UINavigationController {
         super.viewDidLoad()
         
         self.setup()
-        self.viewModel.fetchPokemon()
-        self.view.setNeedsUpdateConstraints()
+        self.viewModel.fetchFirstPage()
     }
     
     func setup() {
-        self.navigationBar.barStyle = .default
-        self.navigationBar.tintColor = UIColor.black
-        
-        // TODO: Check this
-        self.navigationItem.title = "List"
+        self.setupNavigationBar()
+        self.setupTable()
+        self.setupBindings()
+    }
+    
+    func setupNavigationBar() {
+        self.navigationItem.title = "Pokemon list"
         self.view.backgroundColor = UIColor.white
+    }
+    
+    func setupTable() {
+        self.tableView.backgroundColor = UIColor.white
+        self.tableView.contentInsetAdjustmentBehavior = .never
+        self.tableView.register(cellClass: PokemonTableViewCell.self)
+
+        self.tableViewController.willMove(toParent: self)
+        self.addChild(self.tableViewController)
+        self.view.addSubview(self.tableView)        
+        self.tableViewController.didMove(toParent: self)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("nav = nil: \(self.navigationController == nil)")
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
+    }
+    
+    func setupBindings() {
+        self.viewModel.onFirstPage = { [weak self] models in
+            let sectionModel = DefaultTableSectionModel(cells: models, header: nil, footer: nil)
+            self?.tableAdapter.update(viewModels: [sectionModel])
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.tableView.frame = CGRect(x: 0.0, 
+                                      y: self.view.safeAreaInsets.top, 
+                                      width: self.view.safeAreaLayoutGuide.layoutFrame.width, 
+                                      height: self.view.safeAreaLayoutGuide.layoutFrame.height)
     }
 }

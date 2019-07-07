@@ -14,8 +14,6 @@ public typealias CellEditHandler = ((UITableViewCell.EditingStyle, IndexPath) ->
 
 open class TableViewCell: UITableViewCell {
     
-    private var didSetupConstraints = false
-    
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

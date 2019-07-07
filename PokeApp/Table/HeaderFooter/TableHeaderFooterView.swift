@@ -10,8 +10,6 @@ import UIKit
 
 open class TableHeaderFooterView: UITableViewHeaderFooterView {
     
-    fileprivate var didSetupConstraints = false
-    
     public override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
@@ -32,22 +30,9 @@ open class TableHeaderFooterView: UITableViewHeaderFooterView {
         
     }
     
-    // TODO: make automatic calculation
     open class func height(for model: TableHeaderFooterModel, 
                            tableView: UITableView) -> CGFloat {
         return 0.0
-    }
-    
-    open func setupConstraints() {
-        
-    }
-    
-    open override func updateConstraints() {
-        if !self.didSetupConstraints {
-            self.setupConstraints()
-            self.didSetupConstraints = true
-        }
-        super.updateConstraints()
     }
 }
 

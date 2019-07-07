@@ -8,6 +8,12 @@
 
 import Foundation
 
+struct ApiConstants {
+    static let scheme: String = "https"
+    static let host: String = "pokeapi.co"
+    static let version: String = "v2"
+}
+
 public protocol NetworkRoute {
     var scheme: String { get }
     var host: String { get }
@@ -19,11 +25,11 @@ public protocol NetworkRoute {
 extension NetworkRoute {
     
     public var scheme: String {
-        return "https"
+        return ApiConstants.scheme
     }
     
     public var host: String {
-        return "pokeapi.co"
+        return ApiConstants.host
     }
     
     public var parameters: [URLQueryItem]? {

@@ -11,13 +11,69 @@ import Domain
 
 final class PokemonListViewModel {
     
-    private let service: GetPokemonService
+    var onFirstPage: (([TableCellModel]) -> Void)?
+    var onNextPage: (([TableCellModel]) -> Void)?
+    var onError: ((Error) -> Void)?
+    var onOutOfPages: ActionHandler?
     
-    init(service: GetPokemonService) {
+    private var nextPageURL: URL? = nil
+    
+    private var service: GetPokemonListService
+    
+    init(service: GetPokemonListService) {
         self.service = service
+        
+        self.service.onFirstPage = { [weak self] result in
+            switch result {
+            case .success(let page):
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.nextPageURL = page.next
+                
+                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
+                self?.onFirstPage?(models)
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        }
+        
+        self.service.onNextPage = { [weak self] result in
+            switch result {
+            case .success(let page):
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                strongSelf.nextPageURL = page.next
+                
+                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
+                self?.onNextPage?(models)
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        }
     }
     
-    func fetchPokemon() {
-        self.service.execute(id: 5)
+    func fetchFirstPage() {
+        self.service.firstPage()
+    }
+    
+    func fetchNextPage() {
+        guard let nextPageUrl = self.nextPageURL else {
+            self.onOutOfPages?()
+            return
+        }
+        self.service.nextPage(nextPageUrl: nextPageUrl)
+    }
+}
+
+// MARK: Support
+private extension PokemonListViewModel {
+    
+    func makePokemonCellViewModel(pokemonModel: NamedEntity) -> TableCellModel {
+        let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized, cellSelectionHandler: nil)
+        return cellViewModel
     }
 }

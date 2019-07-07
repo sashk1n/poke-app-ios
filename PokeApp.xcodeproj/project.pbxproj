@@ -20,6 +20,7 @@
 		843D253722D095EA00805BBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843D253522D095EA00805BBC /* LaunchScreen.storyboard */; };
 		84EBE89822D231FA00654A07 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EBE89722D231FA00654A07 /* Domain.framework */; };
 		84EBE89922D231FA00654A07 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84EBE89722D231FA00654A07 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84EBE8CD22D252F900654A07 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,7 @@
 		843D253622D095EA00805BBC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		843D253822D095EA00805BBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84EBE89722D231FA00654A07 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		8415C0EC22D1C77500EE442D /* PokemonList */ = {
 			isa = PBXGroup;
 			children = (
+				84EBE8CB22D252E100654A07 /* Cell */,
 				843D252E22D095E900805BBC /* PokemonListViewController.swift */,
 				8415C0EF22D1C79A00EE442D /* PokemonListViewModel.swift */,
 			);
@@ -157,6 +160,14 @@
 			path = PokeApp;
 			sourceTree = "<group>";
 		};
+		84EBE8CB22D252E100654A07 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -231,6 +242,7 @@
 				8415C10E22D1C96300EE442D /* UITableView+Extensions.swift in Sources */,
 				843D252F22D095E900805BBC /* PokemonListViewController.swift in Sources */,
 				8415C0FB22D1C81600EE442D /* TableViewCell.swift in Sources */,
+				84EBE8CD22D252F900654A07 /* PokemonTableViewCell.swift in Sources */,
 				8415C10922D1C89700EE442D /* Handlers.swift in Sources */,
 				8415C10222D1C84500EE442D /* TableSectionModel.swift in Sources */,
 				8415C0F022D1C79A00EE442D /* PokemonListViewModel.swift in Sources */,
