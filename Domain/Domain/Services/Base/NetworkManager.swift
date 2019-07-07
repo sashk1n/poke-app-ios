@@ -1,5 +1,5 @@
 //
-//  NetworkService.swift
+//  NetworkManager.swift
 //  PokeApp
 //
 //  Created by marcenuk on 07/07/2019.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-final class NetworkManager {
+public final class NetworkManager {
     
-    class func request<T: Codable>(route: NetworkRoute, completion: @escaping (Result<T, Error>) -> ()) {
+    public class func request<T: Codable>(route: NetworkRoute, completion: @escaping (Result<T, Error>) -> ()) {
         var components = URLComponents()
         components.scheme = route.scheme
         components.host = route.host
         components.path = route.path
-        components.queryItems = route.parameters.isEmpty ? nil : route.parameters
+        components.queryItems = route.parameters
         
         guard let url = components.url else { 
             return 
@@ -27,12 +27,12 @@ final class NetworkManager {
         let session = URLSession(configuration: .default)
         let dataTask = session.dataTask(with: urlRequest) { data, response, error in
             guard error == nil else {
-                completion(.failure(error!))
+                error.map { completion(.failure($0)) }
                 print(String(describing: error?.localizedDescription))
                 return
             }
             
-            debugPrint(data?.prettyPrintedJSONString ?? "nil")
+            //debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {
                 return
@@ -45,7 +45,7 @@ final class NetworkManager {
             
             // TODO: resolve REST errors
             do {
-                let responseObject = try jsonDecoder.decode([String: [T]].self, from: data)
+                let responseObject = try jsonDecoder.decode(T.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(responseObject))
                 }

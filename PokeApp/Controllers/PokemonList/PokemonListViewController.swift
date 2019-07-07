@@ -10,7 +10,7 @@ import UIKit
 
 final class PokemonListViewController: UINavigationController {
     
-    private var viewModel: PokemonListViewModel = PokemonListViewModel()
+    private var viewModel: PokemonListViewModel
     
     private let tableViewController: UITableViewController
     
@@ -21,7 +21,8 @@ final class PokemonListViewController: UINavigationController {
         return self.tableViewController.tableView
     }
     
-    init() {
+    init(viewModel: PokemonListViewModel) {
+        self.viewModel = viewModel
         self.tableViewController = UITableViewController(style: .grouped)
         self.tableAdapter = TableAdapter(tableView: self.tableViewController.tableView)
         super.init(nibName: nil, bundle: nil)

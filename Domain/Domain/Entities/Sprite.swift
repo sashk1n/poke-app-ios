@@ -9,8 +9,14 @@
 import Foundation
 
 public struct Sprites: Codable {
-    public let backFemale, backShinyFemale, backDefault, frontFemale: String
-    public let frontShinyFemale, backShiny, frontDefault, frontShiny: String
+    public let backFemale: String?
+    public let backShinyFemale: String?
+    public let backDefault: String?
+    public let frontShinyFemale: String?
+    public let backShiny: String?
+    public let frontDefault: String?
+    public let frontShiny: String?
+    public let frontFemale: String?
     
     enum CodingKeys: String, CodingKey {
         case backFemale = "back_female"
@@ -23,14 +29,14 @@ public struct Sprites: Codable {
         case frontShiny = "front_shiny"
     }
     
-    public init(backFemale: String, 
-                backShinyFemale: String, 
-                backDefault: String, 
-                frontFemale: String, 
-                frontShinyFemale: String, 
-                backShiny: String, 
-                frontDefault: String, 
-                frontShiny: String) {
+    public init(backFemale: String?, 
+                backShinyFemale: String?, 
+                backDefault: String?, 
+                frontFemale: String?, 
+                frontShinyFemale: String?, 
+                backShiny: String?, 
+                frontDefault: String?, 
+                frontShiny: String?) {
         self.backFemale = backFemale
         self.backShinyFemale = backShinyFemale
         self.backDefault = backDefault

@@ -18,7 +18,7 @@ public struct Pokemon: Codable {
     public let forms: [Species]
     public let gameIndices: [GameIndex]
     public let heldItems: [HeldItem]
-    public let locationAreaEncounters: [LocationAreaEncounter]
+    public let locationAreaEncounters: URL
     public let moves: [Move]
     public let species: Species
     public let sprites: Sprites
@@ -48,7 +48,7 @@ public struct Pokemon: Codable {
                 forms: [Species], 
                 gameIndices: [GameIndex], 
                 heldItems: [HeldItem], 
-                locationAreaEncounters: [LocationAreaEncounter], 
+                locationAreaEncounters: URL, 
                 moves: [Move], 
                 species: Species, 
                 sprites: Sprites, 

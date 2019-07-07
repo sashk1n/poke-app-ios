@@ -11,14 +11,13 @@ import Domain
 
 final class PokemonListViewModel {
     
+    private let service: GetPokemonService
+    
+    init(service: GetPokemonService) {
+        self.service = service
+    }
+    
     func fetchPokemon() {
-        NetworkManager.request(route: GetPokemonDetailRoute(id: 5)) { (result: Result<[String: [Pokemon]], Error>) in
-            switch result {
-            case .success:
-                print(result)
-            case .failure:
-                print(result)
-            }
-        }
+        self.service.execute(id: 5)
     }
 }
