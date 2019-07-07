@@ -7,13 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8415C0E822D1C3BC00EE442D /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8415C0E722D1C3BC00EE442D /* Domain.framework */; };
+		8415C0E922D1C3BC00EE442D /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8415C0E722D1C3BC00EE442D /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		843D252D22D095E900805BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D252C22D095E900805BBC /* AppDelegate.swift */; };
 		843D252F22D095E900805BBC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843D252E22D095E900805BBC /* ViewController.swift */; };
 		843D253422D095EA00805BBC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843D253322D095EA00805BBC /* Assets.xcassets */; };
 		843D253722D095EA00805BBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843D253522D095EA00805BBC /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8415C0EA22D1C3BC00EE442D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8415C0E922D1C3BC00EE442D /* Domain.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8415C0E722D1C3BC00EE442D /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		843D252922D095E900805BBC /* PokeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843D252C22D095E900805BBC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		843D252E22D095E900805BBC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -27,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8415C0E822D1C3BC00EE442D /* Domain.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +54,7 @@
 		843D252022D095E900805BBC = {
 			isa = PBXGroup;
 			children = (
+				8415C0E722D1C3BC00EE442D /* Domain.framework */,
 				843D252B22D095E900805BBC /* PokeApp */,
 				843D252A22D095E900805BBC /* Products */,
 			);
@@ -71,6 +90,7 @@
 				843D252522D095E900805BBC /* Sources */,
 				843D252622D095E900805BBC /* Frameworks */,
 				843D252722D095E900805BBC /* Resources */,
+				8415C0EA22D1C3BC00EE442D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -273,6 +293,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UABCUKG5HN;
 				INFOPLIST_FILE = PokeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -291,6 +312,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UABCUKG5HN;
 				INFOPLIST_FILE = PokeApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
