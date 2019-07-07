@@ -35,6 +35,7 @@ final class PokemonListViewController: UINavigationController {
         super.viewDidLoad()
         
         self.setup()
+        self.viewModel.fetchPokemon()
         self.view.setNeedsUpdateConstraints()
     }
     
