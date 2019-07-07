@@ -15,6 +15,7 @@ final class PokemonListViewModel {
     var onNextPage: (([TableCellModel]) -> Void)?
     var onError: ((Error) -> Void)?
     var onOutOfPages: ActionHandler?
+    var isLoading: Bool = true
     
     private var nextPageURL: URL? = nil
     
@@ -24,15 +25,18 @@ final class PokemonListViewModel {
         self.service = service
         
         self.service.onFirstPage = { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+            
+            self?.isLoading = false
             switch result {
             case .success(let page):
-                guard let strongSelf = self else {
-                    return
-                }
+                
                 
                 strongSelf.nextPageURL = page.next
                 
-                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
+                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) }
                 self?.onFirstPage?(models)
             case .failure(let error):
                 self?.onError?(error)
@@ -40,11 +44,14 @@ final class PokemonListViewModel {
         }
         
         self.service.onNextPage = { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+
+            self?.isLoading = false
             switch result {
             case .success(let page):
-                guard let strongSelf = self else {
-                    return
-                }
+                
                 
                 strongSelf.nextPageURL = page.next
                 
@@ -57,14 +64,21 @@ final class PokemonListViewModel {
     }
     
     func fetchFirstPage() {
+        self.isLoading = true
         self.service.firstPage()
     }
     
     func fetchNextPage() {
+        guard !self.isLoading else {
+            return
+        }
+        
+        self.isLoading = true
         guard let nextPageUrl = self.nextPageURL else {
             self.onOutOfPages?()
             return
         }
+        
         self.service.nextPage(nextPageUrl: nextPageUrl)
     }
 }

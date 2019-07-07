@@ -11,6 +11,7 @@ import UIKit
 final class TableAdapter: NSObject {
     
     var onScroll: ((CGPoint) -> Void)?
+    var onScrollToBottom: ActionHandler?
     
     private let tableView: UITableView
     private var viewModels = [TableSectionModel]()
@@ -198,7 +199,7 @@ extension TableAdapter: UITableViewDelegate {
         }
         
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: viewModel.viewType)) as! TableHeaderFooterView
-        view.bind(model: viewModel)
+        view.bind(viewModel: viewModel)
         return view
     }
     
@@ -208,7 +209,7 @@ extension TableAdapter: UITableViewDelegate {
         }
         
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: String(describing: model.viewType)) as! TableHeaderFooterView
-        view.bind(model: model)
+        view.bind(viewModel: model)
         return view
     }
     
@@ -241,5 +242,16 @@ extension TableAdapter: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let viewModel = self.viewModels[indexPath.section].cellModels[indexPath.row]
         return viewModel.editRowActions
+    }
+}
+
+// MARK: ScrollViewDelegate
+extension TableAdapter {
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isApproachingToBottom && !self.viewModels.isEmpty {
+            self.onScrollToBottom?()
+        }
+        self.onScroll?(scrollView.contentOffset)
     }
 }

@@ -40,40 +40,50 @@ final class PokemonListViewController: UIViewController {
     }
     
     func setup() {
+        self.view.backgroundColor = UIColor.white
+        
         self.setupNavigationBar()
         self.setupTable()
         self.setupBindings()
     }
     
     func setupNavigationBar() {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
         self.navigationItem.title = "Pokemon list"
-        self.view.backgroundColor = UIColor.white
     }
     
     func setupTable() {
-        self.tableView.backgroundColor = UIColor.white
-        self.tableView.contentInsetAdjustmentBehavior = .never
-        self.tableView.register(cellClass: PokemonTableViewCell.self)
-
         self.tableViewController.willMove(toParent: self)
         self.addChild(self.tableViewController)
         self.view.addSubview(self.tableView)        
         self.tableViewController.didMove(toParent: self)
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        self.tableView.backgroundColor = UIColor.white
+        self.tableView.contentInsetAdjustmentBehavior = .never
         
-        print("nav = nil: \(self.navigationController == nil)")
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .automatic
+        self.tableView.register(cellClass: PokemonTableViewCell.self)
+        self.tableView.register(headerFooterViewClass: LoadingTableFooterView.self)
+        
+        self.tableAdapter.onScrollToBottom = { [weak self] in
+            self?.viewModel.fetchNextPage()
+        }
     }
     
     func setupBindings() {
         self.viewModel.onFirstPage = { [weak self] models in
-            let sectionModel = DefaultTableSectionModel(cells: models, header: nil, footer: nil)
+            let sectionModel = DefaultTableSectionModel(cells: models, 
+                                                        header: nil, 
+                                                        footer: LoadingTableCellViewModel())
             self?.tableAdapter.update(viewModels: [sectionModel])
+        }
+        
+        self.viewModel.onNextPage = { [weak self] models in
+            self?.tableAdapter.append(models, in: 0)
+        }
+        self.viewModel.onOutOfPages = { [weak self] in
+            print("out of pages")
+            // TODO: remove footer
         }
     }
     

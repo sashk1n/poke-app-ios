@@ -43,6 +43,7 @@ public class GetPokemonListServiceImp: GetPokemonListService {
 public struct GetPokemonListRoute: NetworkRoute {
     public var path: String
     public var method: String { return "GET" }
+    public var parameters: [URLQueryItem]?
     
     public init() { 
         self.path = "/api/\(ApiConstants.version)/pokemon/"
@@ -50,5 +51,7 @@ public struct GetPokemonListRoute: NetworkRoute {
     
     public init(nextPageURL: URL) {
         self.path = nextPageURL.path
+        let items = URLComponents(url: nextPageURL, resolvingAgainstBaseURL: false)?.queryItems
+        self.parameters = items
     }
 }

@@ -26,7 +26,7 @@ open class TableHeaderFooterView: UITableViewHeaderFooterView {
         
     }
     
-    open func bind(model: TableHeaderFooterModel) {
+    open func bind(viewModel: TableHeaderFooterModel) {
         
     }
     

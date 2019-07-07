@@ -62,7 +62,7 @@ extension TableCellModel {
     }
 }
 
-extension TableCellModel {
+public extension TableCellModel {
     
     var canEdit: Bool {
         return false

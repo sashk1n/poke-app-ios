@@ -21,6 +21,8 @@
 		84EBE89822D231FA00654A07 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EBE89722D231FA00654A07 /* Domain.framework */; };
 		84EBE89922D231FA00654A07 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84EBE89722D231FA00654A07 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84EBE8CD22D252F900654A07 /* PokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */; };
+		84EBE8CF22D2668600654A07 /* LoadingTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8CE22D2668600654A07 /* LoadingTableFooterView.swift */; };
+		84EBE8D122D26B1900654A07 /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8D022D26B1900654A07 /* UIScrollView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +55,8 @@
 		843D253822D095EA00805BBC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84EBE89722D231FA00654A07 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonTableViewCell.swift; sourceTree = "<group>"; };
+		84EBE8CE22D2668600654A07 /* LoadingTableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableFooterView.swift; sourceTree = "<group>"; };
+		84EBE8D022D26B1900654A07 /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 			children = (
 				8415C10822D1C89700EE442D /* Handlers.swift */,
 				8415C10D22D1C96300EE442D /* UITableView+Extensions.swift */,
+				84EBE8D022D26B1900654A07 /* UIScrollView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				84EBE8CC22D252F900654A07 /* PokemonTableViewCell.swift */,
+				84EBE8CE22D2668600654A07 /* LoadingTableFooterView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -242,10 +248,12 @@
 				8415C10E22D1C96300EE442D /* UITableView+Extensions.swift in Sources */,
 				843D252F22D095E900805BBC /* PokemonListViewController.swift in Sources */,
 				8415C0FB22D1C81600EE442D /* TableViewCell.swift in Sources */,
+				84EBE8D122D26B1900654A07 /* UIScrollView+Extensions.swift in Sources */,
 				84EBE8CD22D252F900654A07 /* PokemonTableViewCell.swift in Sources */,
 				8415C10922D1C89700EE442D /* Handlers.swift in Sources */,
 				8415C10222D1C84500EE442D /* TableSectionModel.swift in Sources */,
 				8415C0F022D1C79A00EE442D /* PokemonListViewModel.swift in Sources */,
+				84EBE8CF22D2668600654A07 /* LoadingTableFooterView.swift in Sources */,
 				8415C10022D1C83E00EE442D /* TableHeaderFooterView.swift in Sources */,
 				843D252D22D095E900805BBC /* AppDelegate.swift in Sources */,
 				8415C10622D1C86A00EE442D /* TableAdapter.swift in Sources */,

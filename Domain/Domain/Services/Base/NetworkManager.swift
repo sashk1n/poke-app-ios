@@ -25,6 +25,8 @@ public final class NetworkManager {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = route.method
         
+        print("\(route.method): \(url)")
+        
         let session = URLSession(configuration: .default)
         let dataTask = session.dataTask(with: urlRequest) { data, response, error in
             guard error == nil else {
@@ -34,7 +36,7 @@ public final class NetworkManager {
             }
             
             // TODO: Remove
-            debugPrint(data?.prettyPrintedJSONString ?? "nil")
+            //debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {
                 return
