@@ -23,6 +23,8 @@
 		8415C0E422D1C2C800EE442D /* EncounterDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415C0D422D1C2C800EE442D /* EncounterDetail.swift */; };
 		8415C0E522D1C2C800EE442D /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415C0D522D1C2C800EE442D /* Species.swift */; };
 		8415C0E622D1C2C800EE442D /* HeldItemVersionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415C0D622D1C2C800EE442D /* HeldItemVersionDetail.swift */; };
+		8416D98022D458BD006502E2 /* GetPokemonListRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416D97F22D458BD006502E2 /* GetPokemonListRoute.swift */; };
+		8416D98222D458E3006502E2 /* GetPokemonRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416D98122D458E3006502E2 /* GetPokemonRoute.swift */; };
 		84EBE8AE22D2329100654A07 /* NetworkRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8AB22D2329100654A07 /* NetworkRoute.swift */; };
 		84EBE8B922D2344A00654A07 /* GetPokemonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8B822D2344A00654A07 /* GetPokemonService.swift */; };
 		84EBE8C322D237C200654A07 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EBE8C222D237C200654A07 /* NetworkManager.swift */; };
@@ -50,6 +52,8 @@
 		8415C0D422D1C2C800EE442D /* EncounterDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncounterDetail.swift; sourceTree = "<group>"; };
 		8415C0D522D1C2C800EE442D /* Species.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		8415C0D622D1C2C800EE442D /* HeldItemVersionDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeldItemVersionDetail.swift; sourceTree = "<group>"; };
+		8416D97F22D458BD006502E2 /* GetPokemonListRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPokemonListRoute.swift; sourceTree = "<group>"; };
+		8416D98122D458E3006502E2 /* GetPokemonRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPokemonRoute.swift; sourceTree = "<group>"; };
 		84EBE8AB22D2329100654A07 /* NetworkRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRoute.swift; sourceTree = "<group>"; };
 		84EBE8B822D2344A00654A07 /* GetPokemonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPokemonService.swift; sourceTree = "<group>"; };
 		84EBE8C222D237C200654A07 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -119,12 +123,30 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		8416D97D22D4589D006502E2 /* GetPokemon */ = {
+			isa = PBXGroup;
+			children = (
+				84EBE8B822D2344A00654A07 /* GetPokemonService.swift */,
+				8416D98122D458E3006502E2 /* GetPokemonRoute.swift */,
+			);
+			path = GetPokemon;
+			sourceTree = "<group>";
+		};
+		8416D97E22D458A5006502E2 /* GetPokemonList */ = {
+			isa = PBXGroup;
+			children = (
+				84EBE8C422D23F5400654A07 /* GetPokemonListService.swift */,
+				8416D97F22D458BD006502E2 /* GetPokemonListRoute.swift */,
+			);
+			path = GetPokemonList;
+			sourceTree = "<group>";
+		};
 		84EBE8A822D2328800654A07 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				84EBE8B622D233A100654A07 /* Base */,
-				84EBE8B822D2344A00654A07 /* GetPokemonService.swift */,
-				84EBE8C422D23F5400654A07 /* GetPokemonListService.swift */,
+				8416D97E22D458A5006502E2 /* GetPokemonList */,
+				8416D97D22D4589D006502E2 /* GetPokemon */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -235,10 +257,12 @@
 				8415C0DD22D1C2C800EE442D /* Move.swift in Sources */,
 				8415C0E222D1C2C800EE442D /* HeldItem.swift in Sources */,
 				8415C0DB22D1C2C800EE442D /* TypeElement.swift in Sources */,
+				8416D98222D458E3006502E2 /* GetPokemonRoute.swift in Sources */,
 				8415C0E122D1C2C800EE442D /* GameIndex.swift in Sources */,
 				84EBE8AE22D2329100654A07 /* NetworkRoute.swift in Sources */,
 				8415C0D922D1C2C800EE442D /* LocationAreaEncounterVersionDetail.swift in Sources */,
 				8415C0E322D1C2C800EE442D /* MessageSenderViewModel.swift in Sources */,
+				8416D98022D458BD006502E2 /* GetPokemonListRoute.swift in Sources */,
 				8415C0E622D1C2C800EE442D /* HeldItemVersionDetail.swift in Sources */,
 				8415C0D722D1C2C800EE442D /* VersionGroupDetail.swift in Sources */,
 				84EBE8C822D240BB00654A07 /* Page.swift in Sources */,

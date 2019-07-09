@@ -10,7 +10,8 @@ import UIKit
 
 final class PokemonListViewController: UIViewController {
     
-    private var viewModel: PokemonListViewModel
+    var viewModel: PokemonListViewModel!
+    var router: PokemonListRouter!
     
     private let tableViewController: UITableViewController
     
@@ -21,8 +22,7 @@ final class PokemonListViewController: UIViewController {
         return self.tableViewController.tableView
     }
     
-    init(viewModel: PokemonListViewModel) {
-        self.viewModel = viewModel
+    init() {
         self.tableViewController = UITableViewController(style: .grouped)
         self.tableAdapter = TableAdapter(tableView: self.tableViewController.tableView)
         super.init(nibName: nil, bundle: nil)
@@ -39,10 +39,15 @@ final class PokemonListViewController: UIViewController {
         self.viewModel.fetchFirstPage()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.setupNavigationBar()
+    }
+    
     func setup() {
         self.view.backgroundColor = UIColor.white
         
-        self.setupNavigationBar()
         self.setupTable()
         self.setupBindings()
     }
@@ -81,9 +86,13 @@ final class PokemonListViewController: UIViewController {
         self.viewModel.onNextPage = { [weak self] models in
             self?.tableAdapter.append(models, in: 0)
         }
-        self.viewModel.onOutOfPages = { [weak self] in
+        self.viewModel.onOutOfPages = { [unowned self] in
             print("out of pages")
             // TODO: remove footer
+        }
+        self.viewModel.onSelectPokemon = { [unowned self] id in
+            let args = PokemonProfileArgs(id: id)
+            self.router.routeToPokemonProfile(args: args, from: self)
         }
     }
     

@@ -27,8 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate {
     
     func makeListViewController() -> UIViewController {
+        let viewController = PokemonListViewController()
+        
         let viewModel = PokemonListViewModel(service: GetPokemonListServiceImp())
-        let viewController = PokemonListViewController(viewModel: viewModel)
+        viewController.viewModel = viewModel
+        
+        let router = PokemonListRouter()
+        viewController.router = router
+        
         return viewController
     }
 }

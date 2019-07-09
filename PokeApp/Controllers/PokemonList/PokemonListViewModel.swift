@@ -15,9 +15,10 @@ final class PokemonListViewModel {
     var onNextPage: (([TableCellModel]) -> Void)?
     var onError: ((Error) -> Void)?
     var onOutOfPages: ActionHandler?
-    var isLoading: Bool = true
+    var onSelectPokemon: IDActionHandler?
     
     private var nextPageURL: URL? = nil
+    private var isLoading: Bool = true
     
     private var service: GetPokemonListService
     
@@ -32,8 +33,6 @@ final class PokemonListViewModel {
             self?.isLoading = false
             switch result {
             case .success(let page):
-                
-                
                 strongSelf.nextPageURL = page.next
                 
                 let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) }
@@ -51,8 +50,6 @@ final class PokemonListViewModel {
             self?.isLoading = false
             switch result {
             case .success(let page):
-                
-                
                 strongSelf.nextPageURL = page.next
                 
                 let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
@@ -73,12 +70,13 @@ final class PokemonListViewModel {
             return
         }
         
-        self.isLoading = true
         guard let nextPageUrl = self.nextPageURL else {
             self.onOutOfPages?()
+            self.isLoading = false            
             return
         }
         
+        self.isLoading = true
         self.service.nextPage(nextPageUrl: nextPageUrl)
     }
 }
@@ -87,7 +85,11 @@ final class PokemonListViewModel {
 private extension PokemonListViewModel {
     
     func makePokemonCellViewModel(pokemonModel: NamedEntity) -> TableCellModel {
-        let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized, cellSelectionHandler: nil)
+        let cellSelectionHandler: CellSelectionHandler = { [unowned self] indexPath in
+            self.onSelectPokemon?(indexPath.row)
+        }
+        let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized, 
+                                                 cellSelectionHandler: cellSelectionHandler)
         return cellViewModel
     }
 }

@@ -10,9 +10,9 @@ import Foundation
 
 public struct NamedEntity: Codable {
     public let name: String
-    public let url: String
+    public let url: URL
     
-    public init(name: String, url: String) {
+    public init(name: String, url: URL) {
         self.name = name
         self.url = url
     }

@@ -9,3 +9,4 @@
 import Foundation
 
 typealias ActionHandler = () -> Void
+typealias IDActionHandler = (Int) -> Void
