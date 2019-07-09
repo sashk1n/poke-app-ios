@@ -7,16 +7,27 @@
 //
 
 import Foundation
+import Domain
 
 struct PokemonProfileArgs {
-    let id: Int
+    let pokemonName: String
 }
 
 final class PokemonProfileViewModel {
     
-    var pokemonId: Int
+    // TODO: in delegates!
+    var onProfileData: SingleHandler<[TableSectionModel]>?
     
-    init(args: PokemonProfileArgs) {
-        self.pokemonId = args.id
+    private var name: String
+    
+    private var service: GetPokemonService
+    
+    init(args: PokemonProfileArgs, service: GetPokemonService) {
+        self.name = args.pokemonName
+        self.service = service
+    }
+    
+    func fetchProfile() {
+        
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Domain
 
 final class PokemonListRouter {
     
@@ -19,10 +20,8 @@ final class PokemonListRouter {
 private extension PokemonListRouter {
     
     func makePokemonProfileViewController(args: PokemonProfileArgs) -> UIViewController {
-        // TODO: Create view model
         let viewController = PokemonProfileViewController()
-        
-        let viewModel = PokemonProfileViewModel(args: args)
+        let viewModel = PokemonProfileViewModel(args: args, service: GetPokemonServiceImp())
         viewController.viewModel = viewModel
         return viewController
     }

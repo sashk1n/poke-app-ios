@@ -17,3 +17,22 @@ public struct NamedEntity: Codable {
         self.url = url
     }
 }
+
+// MARK: Pokemon hacks.
+public extension NamedEntity {
+    
+    var pokemonId: Int? {
+        guard let stringId = self.url.path.split(separator: "/").last else {
+            return nil
+        }
+        return Int(stringId)
+    }
+    
+    var pokemonImageURL: URL? {
+        guard let pokemonId = self.pokemonId else {
+            return nil
+        }
+        
+        return URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(pokemonId).png")
+    }
+}

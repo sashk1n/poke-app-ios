@@ -6,7 +6,11 @@
 //  Copyright © 2019 marcenyuk. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-typealias ActionHandler = () -> Void
-typealias IDActionHandler = (Int) -> Void
+typealias SingleHandler<T> = (T) -> Void
+
+typealias ActionHandler = (() -> Void)
+typealias StringHandler = SingleHandler<String>
+typealias ImageHandler = SingleHandler<UIImage>
+typealias IDActionHandler = SingleHandler<Int>

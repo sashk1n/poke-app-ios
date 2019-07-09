@@ -90,8 +90,8 @@ final class PokemonListViewController: UIViewController {
             print("out of pages")
             // TODO: remove footer
         }
-        self.viewModel.onSelectPokemon = { [unowned self] id in
-            let args = PokemonProfileArgs(id: id)
+        self.viewModel.onSelectPokemon = { [unowned self] name in
+            let args = PokemonProfileArgs(pokemonName: name)
             self.router.routeToPokemonProfile(args: args, from: self)
         }
     }

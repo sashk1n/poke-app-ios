@@ -11,11 +11,12 @@ import Domain
 
 final class PokemonListViewModel {
     
+    // TODO: in delegates!
     var onFirstPage: (([TableCellModel]) -> Void)?
     var onNextPage: (([TableCellModel]) -> Void)?
     var onError: ((Error) -> Void)?
     var onOutOfPages: ActionHandler?
-    var onSelectPokemon: IDActionHandler?
+    var onSelectPokemon: StringHandler?
     
     private var nextPageURL: URL? = nil
     private var isLoading: Bool = true
@@ -85,10 +86,11 @@ final class PokemonListViewModel {
 private extension PokemonListViewModel {
     
     func makePokemonCellViewModel(pokemonModel: NamedEntity) -> TableCellModel {
-        let cellSelectionHandler: CellSelectionHandler = { [unowned self] indexPath in
-            self.onSelectPokemon?(indexPath.row)
+        let cellSelectionHandler: CellSelectionHandler = { [unowned self] _ in
+            self.onSelectPokemon?(pokemonModel.name)
         }
-        let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized, 
+        let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized,
+                                                 imageURL: pokemonModel.pokemonImageURL,
                                                  cellSelectionHandler: cellSelectionHandler)
         return cellViewModel
     }
