@@ -9,6 +9,10 @@
 import Foundation
 import Domain
 
+private struct Constants {
+    static let title: String = "Pokemon profile"
+}
+
 final class PokemonListViewModel {
     
     var onFirstPage: (([TableCellModel]) -> Void)?
@@ -38,7 +42,11 @@ final class PokemonListViewModel {
             case .success(let page):
                 strongSelf.nextPageURL = page.next
                 
-                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) }
+                var models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) }
+                if page.next != nil {
+                    models.append(strongSelf.makeLoadingCellViewModel())
+                }
+                
                 self?.onFirstPage?(models)
             case .failure(let error):
                 self?.onError?(error)
@@ -68,7 +76,11 @@ final class PokemonListViewModel {
             case .success(let page):
                 strongSelf.nextPageURL = page.next
                 
-                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
+                var models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) }
+                if page.next != nil {
+                    models.append(strongSelf.makeLoadingCellViewModel())
+                }
+                
                 self?.onNextPage?(models)
             case .failure(let error):
                 self?.onError?(error)
@@ -77,7 +89,7 @@ final class PokemonListViewModel {
     }
 }
 
-// MARK: Support
+// MARK: Cells.
 private extension PokemonListViewModel {
     
     func makePokemonCellViewModel(pokemonModel: NamedEntity) -> TableCellModel {
@@ -87,6 +99,11 @@ private extension PokemonListViewModel {
         let cellViewModel = PokemonCellViewModel(name: pokemonModel.name.capitalized,
                                                  imageURL: pokemonModel.pokemonImageURL,
                                                  cellSelectionHandler: cellSelectionHandler)
+        return cellViewModel
+    }
+    
+    func makeLoadingCellViewModel() -> TableCellModel {
+        let cellViewModel = LoadingTableCellViewModel() 
         return cellViewModel
     }
 }

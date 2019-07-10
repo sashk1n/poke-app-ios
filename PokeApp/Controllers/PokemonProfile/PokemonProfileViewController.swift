@@ -8,6 +8,10 @@
 
 import UIKit
 
+private struct Constants {
+    static let title: String = "Pokemon profile"
+}
+
 final class PokemonProfileViewController: UIViewController {
     
     var viewModel: PokemonProfileViewModel!
@@ -54,7 +58,7 @@ final class PokemonProfileViewController: UIViewController {
     func setupNavigationBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = "Pokemon profile"
+        self.navigationItem.title = Constants.title
     }
     
     func setupTable() {
@@ -71,8 +75,11 @@ final class PokemonProfileViewController: UIViewController {
     }
     
     func setupBindings() {
-        self.viewModel.onProfileData = { [weak self] sections in
-            self?.tableAdapter.update(viewModels: sections)
+        self.viewModel.onProfileData = { [weak self] sectionsModels in
+            self?.tableAdapter.update(viewModels: sectionsModels)
+        }
+        self.viewModel.onUpdateSpriteModel = { [unowned self] cellModel in
+            self.tableAdapter.update(cellModel, for: 0, in: 1, reload: false)
         }
     }
     

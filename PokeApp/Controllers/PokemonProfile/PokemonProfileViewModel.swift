@@ -15,6 +15,7 @@ struct PokemonProfileArgs {
 
 final class PokemonProfileViewModel {
     
+    var onUpdateSpriteModel: SingleHandler<TableCellModel>?
     var onProfileData: SingleHandler<[TableSectionModel]>?
     
     private var name: String
@@ -75,7 +76,13 @@ private extension PokemonProfileViewModel {
     }
     
     func makePokemonSpritesModel(currentValue: Int, spriteURLs: [URL]) -> TableCellModel {
-        let model = SpriteViewerCellViewModel(currentValue: currentValue, spriteURLs: spriteURLs)
+        let valueChangingHandler: ((Int) -> Void) = { [unowned self] value in
+            let model = self.makePokemonSpritesModel(currentValue: value, spriteURLs: spriteURLs)
+            self.onUpdateSpriteModel?(model)
+        }
+        let model = SpriteViewerCellViewModel(currentValue: currentValue, 
+                                              spriteURLs: spriteURLs, 
+                                              onChangeValue: valueChangingHandler)
         return model
     }
 }

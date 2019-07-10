@@ -1,5 +1,5 @@
 //
-//  LoadingTableFooterView.swift
+//  LoadingTableViewCell.swift
 //  PokeApp
 //
 //  Created by marcenuk on 07/07/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class LoadingTableFooterView: TableHeaderFooterView {
+public class LoadingTableViewCell: TableViewCell {
     
     private lazy var loadingView: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
@@ -21,11 +21,11 @@ public class LoadingTableFooterView: TableHeaderFooterView {
         self.contentView.addSubview(self.loadingView)
     }
     
-    public override func bind(viewModel: TableHeaderFooterModel) {
+    public override func bind(viewModel: TableCellModel) {
         self.loadingView.startAnimating()
     }
     
-    public override class func height(for viewModel: TableHeaderFooterModel, tableView: UITableView) -> CGFloat {
+    public override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {
         return 56.0
     }
     
@@ -36,6 +36,7 @@ public class LoadingTableFooterView: TableHeaderFooterView {
     }
 }
 
-public struct LoadingTableCellViewModel: TableHeaderFooterModel {
-    public var viewType: TableHeaderFooterView.Type { return LoadingTableFooterView.self }
+public struct LoadingTableCellViewModel: TableCellModel {
+    public var cellSelectionHandler: CellSelectionHandler? { return nil }
+    public var cellType: TableViewCell.Type { return LoadingTableViewCell.self }
 }

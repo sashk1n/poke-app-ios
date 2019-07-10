@@ -9,24 +9,23 @@
 import UIKit
 
 private struct Constants {
-    static let imageSize: CGSize = CGSize(width: 45.0, height: 45.0)
+    static let imageSize: CGSize = CGSize(width: 55.0, height: 55.0)
     static let verticalOffset: CGFloat = 8.0
     static let horizontalOffset: CGFloat = 16.0
 }
 
 final class SpriteViewerTableViewCell: TableViewCell {
     
-    private var spriteURLs = [URL]()
+    private var viewModel: SpriteViewerCellViewModel?
     
     private lazy var slider: UISlider = {
         let view = UISlider()
-        view.addTarget(self, action: #selector(changeVlaue), for: .valueChanged)
+        view.addTarget(self, action: #selector(changeValue), for: .valueChanged)
         return view
     }()
     
     private lazy var spriteImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFit
         return view
     }()
     
@@ -40,9 +39,9 @@ final class SpriteViewerTableViewCell: TableViewCell {
         self.spriteImageView.center.x = self.contentView.center.x
         
         self.slider.frame = CGRect(x: Constants.horizontalOffset, 
-                                    y: self.spriteImageView.bounds.maxY, 
-                                    width: self.contentView.bounds.width - 2 * Constants.horizontalOffset, 
-                                    height: 50)
+                                   y: self.spriteImageView.bounds.maxY + Constants.verticalOffset, 
+                                   width: self.contentView.bounds.width - 2 * Constants.horizontalOffset, 
+                                   height: 50)
     }
     
     override func setup() {
@@ -54,26 +53,33 @@ final class SpriteViewerTableViewCell: TableViewCell {
     
     override func bind(viewModel: TableCellModel) {
         let model = viewModel as! SpriteViewerCellViewModel
+        self.viewModel = model
         
         self.slider.maximumValue = Float(model.spriteURLs.count - 1)
         self.slider.value = Float(model.currentValue)
         
-        self.spriteURLs = model.spriteURLs
-        self.imageView?.setImage(from: model.spriteURLs.first!)
+        if let imageURL = model.spriteURLs.first {
+            self.spriteImageView.setImage(from: imageURL)            
+        }
         
         self.setNeedsLayout()
     }
     
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {
-        return 120.0
+        return 130.0
     }
 }
 
 private extension SpriteViewerTableViewCell {
     
-    @objc func changeVlaue(_ sender: UISlider) {
-        let spriteNumber = Int(sender.value)
-        self.spriteImageView.setImage(from: self.spriteURLs[spriteNumber])
+    @objc func changeValue(_ sender: UISlider) {
+        let sliderValue = Int(sender.value)
+        guard sliderValue != self.viewModel?.currentValue else {
+            return
+        }
+        
+        self.spriteImageView.setImage(from: self.viewModel?.spriteURLs[sliderValue])
+        self.viewModel?.onChangeValue?(sliderValue)
     }
 }
 
@@ -83,4 +89,5 @@ struct SpriteViewerCellViewModel: TableCellModel {
 
     let currentValue: Int
     let spriteURLs: [URL]
+    var onChangeValue: ((Int) -> Void)?
 }

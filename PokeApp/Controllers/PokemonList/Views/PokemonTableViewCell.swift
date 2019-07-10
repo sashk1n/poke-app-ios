@@ -63,6 +63,12 @@ final class PokemonTableViewCell: TableViewCell {
         self.setNeedsLayout()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.avatarImageView.image = nil
+    }
+    
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {
         return 65.0
     }

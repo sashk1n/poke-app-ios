@@ -8,6 +8,10 @@
 
 import UIKit
 
+private struct Constants {
+    static let title: String = "Pokemons"
+}
+
 final class PokemonListViewController: UIViewController {
     
     var viewModel: PokemonListViewModel!
@@ -23,7 +27,7 @@ final class PokemonListViewController: UIViewController {
     }
     
     init() {
-        self.tableViewController = UITableViewController(style: .grouped)
+        self.tableViewController = UITableViewController(style: .plain)
         self.tableAdapter = TableAdapter(tableView: self.tableViewController.tableView)
         super.init(nibName: nil, bundle: nil)
     }
@@ -53,9 +57,7 @@ final class PokemonListViewController: UIViewController {
     }
     
     func setupNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-        self.navigationItem.title = "Pokemon list"
+        self.navigationItem.title = Constants.title
     }
     
     func setupTable() {
@@ -68,7 +70,7 @@ final class PokemonListViewController: UIViewController {
         self.tableView.contentInsetAdjustmentBehavior = .never
         
         self.tableView.register(cellClass: PokemonTableViewCell.self)
-        self.tableView.register(headerFooterViewClass: LoadingTableFooterView.self)
+        self.tableView.register(cellClass: LoadingTableViewCell.self)
         
         self.tableAdapter.onScrollToBottom = { [weak self] in
             self?.viewModel.fetchNextPage()
@@ -77,18 +79,18 @@ final class PokemonListViewController: UIViewController {
     
     func setupBindings() {
         self.viewModel.onFirstPage = { [weak self] models in
-            let sectionModel = DefaultTableSectionModel(cells: models, 
-                                                        header: nil, 
-                                                        footer: LoadingTableCellViewModel())
+            let sectionModel = DefaultTableSectionModel(cells: models, header: nil, footer: nil)
             self?.tableAdapter.update(viewModels: [sectionModel])
         }
         
         self.viewModel.onNextPage = { [weak self] models in
-            self?.tableAdapter.append(models, in: 0)
+            self?.tableAdapter.performUpdates { tableAdapter in
+                tableAdapter.delete(tableAdapter.rows(in: 0) - 1, in: 0)
+                tableAdapter.append(models, in: 0)
+            }
         }
         self.viewModel.onOutOfPages = { [unowned self] in
-            print("out of pages")
-            // TODO: remove footer
+            self.tableAdapter.delete(self.tableAdapter.rows(in: 0) - 1, in: 0)
         }
         self.viewModel.onSelectPokemon = { [unowned self] name in
             let args = PokemonProfileArgs(pokemonName: name)
