@@ -15,7 +15,6 @@ struct PokemonProfileArgs {
 
 final class PokemonProfileViewModel {
     
-    // TODO: in delegates!
     var onProfileData: SingleHandler<[TableSectionModel]>?
     
     private var name: String
@@ -28,6 +27,23 @@ final class PokemonProfileViewModel {
     }
     
     func fetchProfile() {
-        
+        self.service.get(byName: self.name, completion: { [weak self] result in
+            switch result {
+            case .success(let pokemon):
+                guard let strongSelf = self else {
+                    return
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+}
+
+private extension PokemonProfileViewModel {
+    
+    func makePokemonDetailModel(title: String, detail: String) -> TableCellModel {
+        let model = PokemonDetailCellViewModel(title: title, detail: detail, cellSelectionHandler: nil)
+        return model
     }
 }

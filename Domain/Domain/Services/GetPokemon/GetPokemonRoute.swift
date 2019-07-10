@@ -12,9 +12,13 @@ public struct GetPokemonRoute: NetworkRoute {
     public var path: String { return "/api/\(ApiConstants.version)/pokemon/\(self.id)/" }
     public var method: String { return "GET" }
     
-    private let id: Int
+    private let id: String
     
     public init(id: Int) {
-        self.id = id
+        self.id = String(id)
+    }
+    
+    public init(name: String) {
+        self.id = name
     }
 }

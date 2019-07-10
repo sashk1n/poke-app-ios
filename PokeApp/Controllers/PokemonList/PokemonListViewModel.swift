@@ -11,7 +11,6 @@ import Domain
 
 final class PokemonListViewModel {
     
-    // TODO: in delegates!
     var onFirstPage: (([TableCellModel]) -> Void)?
     var onNextPage: (([TableCellModel]) -> Void)?
     var onError: ((Error) -> Void)?
@@ -25,8 +24,11 @@ final class PokemonListViewModel {
     
     init(service: GetPokemonListService) {
         self.service = service
-        
-        self.service.onFirstPage = { [weak self] result in
+    }
+    
+    func fetchFirstPage() {
+        self.isLoading = true
+        self.service.firstPage(completion: { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
@@ -41,29 +43,7 @@ final class PokemonListViewModel {
             case .failure(let error):
                 self?.onError?(error)
             }
-        }
-        
-        self.service.onNextPage = { [weak self] result in
-            guard let strongSelf = self else {
-                return
-            }
-
-            self?.isLoading = false
-            switch result {
-            case .success(let page):
-                strongSelf.nextPageURL = page.next
-                
-                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
-                self?.onNextPage?(models)
-            case .failure(let error):
-                self?.onError?(error)
-            }
-        }
-    }
-    
-    func fetchFirstPage() {
-        self.isLoading = true
-        self.service.firstPage()
+        })
     }
     
     func fetchNextPage() {
@@ -78,7 +58,22 @@ final class PokemonListViewModel {
         }
         
         self.isLoading = true
-        self.service.nextPage(nextPageUrl: nextPageUrl)
+        self.service.nextPage(nextPageUrl: nextPageUrl, completion: { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+            self?.isLoading = false
+            
+            switch result {
+            case .success(let page):
+                strongSelf.nextPageURL = page.next
+                
+                let models = page.results.map { strongSelf.makePokemonCellViewModel(pokemonModel: $0) } 
+                self?.onNextPage?(models)
+            case .failure(let error):
+                self?.onError?(error)
+            }
+        })
     }
 }
 

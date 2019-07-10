@@ -25,14 +25,15 @@ extension UIImageView {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             if let response = data, error == nil {
                 DispatchQueue.main.async {
                     guard let cachedImage = UIImage(data: response) else {
                         return
                     }
                     ImageCache.shared.setObject(cachedImage, forKey: url.absoluteString as AnyObject)
-                    self.image = cachedImage
+                    
+                    self?.image = cachedImage
                 }
             }
         }

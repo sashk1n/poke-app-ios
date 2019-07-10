@@ -10,20 +10,21 @@ import Foundation
 
 public protocol GetPokemonService {
     
-    var onComplete: ((Result<Pokemon, Error>) -> ())? { get }
+    func get(byId id: Int, completion: @escaping (Result<Pokemon, Error>) -> ())
     
-    func execute(id: Int)
+    func get(byName name: String, completion: @escaping (Result<Pokemon, Error>) -> ())
 }
 
 public class GetPokemonServiceImp: GetPokemonService {
     
-    public var onComplete: ((Result<Pokemon, Error>) -> ())?
-    
-    public func execute(id: Int) {
+    public func get(byId id: Int, completion: @escaping (Result<Pokemon, Error>) -> ()) {
         let route = GetPokemonRoute(id: id)
-        NetworkManager.request(route: route) { [weak self] result in
-            self?.onComplete?(result)
-        }
+        NetworkManager.request(route: route, completion: completion)
+    }
+    
+    public func get(byName name: String, completion: @escaping (Result<Pokemon, Error>) -> ()) {
+        let route = GetPokemonRoute(name: name)
+        NetworkManager.request(route: route, completion: completion)
     }
     
     public init() {}

@@ -10,31 +10,21 @@ import Foundation
 
 public protocol GetPokemonListService {
     
-    var onFirstPage: ((Result<Page, Error>) -> ())? { get set }
-    var onNextPage: ((Result<Page, Error>) -> ())? { get set }
+    func firstPage(completion: @escaping ((Result<Page, Error>) -> ()))
     
-    func firstPage()
-    
-    func nextPage(nextPageUrl: URL)
+    func nextPage(nextPageUrl: URL, completion: @escaping ((Result<Page, Error>) -> ()))
 }
 
 public class GetPokemonListServiceImp: GetPokemonListService {
     
-    public var onFirstPage: ((Result<Page, Error>) -> ())?
-    public var onNextPage: ((Result<Page, Error>) -> ())?
-    
-    public func firstPage() {
+    public func firstPage(completion: @escaping ((Result<Page, Error>) -> ())) {
         let route = GetPokemonListRoute()
-        NetworkManager.request(route: route) { [weak self] result in
-            self?.onFirstPage?(result)
-        }
+        NetworkManager.request(route: route, completion: completion)
     }
     
-    public func nextPage(nextPageUrl: URL) {
+    public func nextPage(nextPageUrl: URL, completion: @escaping ((Result<Page, Error>) -> ())) {
         let route = GetPokemonListRoute(nextPageURL: nextPageUrl)
-        NetworkManager.request(route: route) { [weak self] result in
-            self?.onNextPage?(result)
-        }
+        NetworkManager.request(route: route, completion: completion)
     }
     
     public init() {}

@@ -60,8 +60,7 @@ final class PokemonProfileViewController: UIViewController {
         self.tableView.backgroundColor = UIColor.white
         self.tableView.contentInsetAdjustmentBehavior = .never
         
-        // TODO: register needed cells
-        //self.tableView.register(cellClass: PokemonTableViewCell.self)
+        self.tableView.register(cellClass: PokemonDetailTableViewCell.self)
     }
     
     func setupBindings() {

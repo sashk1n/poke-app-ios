@@ -54,12 +54,6 @@ final class PokemonTableViewCell: TableViewCell {
         
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        self.imageView?.image = nil
-    }
-    
     override func bind(viewModel: TableCellModel) {
         let model = viewModel as! PokemonCellViewModel
         
