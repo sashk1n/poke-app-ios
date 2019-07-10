@@ -18,6 +18,17 @@ public struct Sprites: Codable {
     public let frontShiny: URL?
     public let frontFemale: URL?
     
+    public var allValues: [URL] {
+        return [backFemale, 
+                backShinyFemale, 
+                backDefault, 
+                frontShinyFemale, 
+                backShiny, 
+                frontDefault, 
+                frontShiny, 
+                frontFemale].compactMap { $0 }
+    }
+    
     enum CodingKeys: String, CodingKey {
         case backFemale = "back_female"
         case backShinyFemale = "back_shiny_female"

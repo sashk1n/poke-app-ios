@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PokemondetailTableViewCell.swift
 //  PokeApp
 //
 //  Created by marcenuk on 10/07/2019.
@@ -31,29 +31,31 @@ final class PokemonDetailTableViewCell: TableViewCell {
         label.font = Constants.detailFont
         label.textColor = Constants.textColor
         label.numberOfLines = 1
+        label.textAlignment = .right
         return label
     }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.titleLabel.frame = CGRect(x: Constants.horizontalOffset, 
+                                       y: 0.0, 
+                                       width: 0.0, 
+                                       height: 0.0)
+        self.titleLabel.sizeToFit()
+        self.titleLabel.frame.size.height = self.contentView.bounds.height
+        
+        self.detailLabel.frame = CGRect(x: self.titleLabel.frame.maxX + Constants.horizontalOffset, 
+                                        y: 0.0, 
+                                        width: self.contentView.bounds.width - self.titleLabel.bounds.width - 3 * Constants.horizontalOffset, 
+                                        height: self.contentView.bounds.height)
+    }
     
     override func setup() {
         super.setup()
         
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.detailLabel)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.titleLabel.frame = CGRect(x: Constants.horizontalOffset, 
-                                          y: 0.0, 
-                                          width: 0.0, 
-                                          height: self.contentView.bounds.height)
-        self.titleLabel.sizeToFit()
-        
-        self.detailLabel.frame = CGRect(x: self.titleLabel.frame.maxX + Constants.horizontalOffset, 
-                                        y: 0.0, 
-                                        width: self.contentView.bounds.width - self.titleLabel.bounds.width - 3 * Constants.horizontalOffset, 
-                                        height: self.contentView.bounds.height)
     }
     
     override func bind(viewModel: TableCellModel) {
@@ -63,7 +65,6 @@ final class PokemonDetailTableViewCell: TableViewCell {
         self.detailLabel.text = model.detail
         
         self.setNeedsLayout()
-        self.layoutIfNeeded()
     }
     
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {

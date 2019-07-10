@@ -61,7 +61,6 @@ final class PokemonTableViewCell: TableViewCell {
         self.avatarImageView.setImage(from: model.imageURL)
         
         self.setNeedsLayout()
-        self.layoutIfNeeded()
     }
     
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {

@@ -45,9 +45,15 @@ final class PokemonProfileViewController: UIViewController {
         self.setupBindings()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.setupNavigationBar()
+    }
+    
     func setupNavigationBar() {
-        //self.navigationController?.navigationBar.prefersLargeTitles = false
-        //self.navigationItem.largeTitleDisplayMode = .never
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = "Pokemon profile"
     }
     
@@ -61,6 +67,7 @@ final class PokemonProfileViewController: UIViewController {
         self.tableView.contentInsetAdjustmentBehavior = .never
         
         self.tableView.register(cellClass: PokemonDetailTableViewCell.self)
+        self.tableView.register(cellClass: SpriteViewerTableViewCell.self)
     }
     
     func setupBindings() {

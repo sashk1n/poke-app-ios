@@ -33,6 +33,11 @@ final class PokemonProfileViewModel {
                 guard let strongSelf = self else {
                     return
                 }
+                
+                var sections = [TableSectionModel]()
+                sections.append(strongSelf.makeGeneralSectionModel(pokemon: pokemon))
+                sections.append(strongSelf.makeSpriteSectionModel(pokemon: pokemon))
+                self?.onProfileData?(sections)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -40,10 +45,37 @@ final class PokemonProfileViewModel {
     }
 }
 
+// MARK: Sections.
+private extension PokemonProfileViewModel {
+    
+    func makeGeneralSectionModel(pokemon: Pokemon) -> TableSectionModel {
+        var viewModels = [TableCellModel]()
+        
+        let nameViewModel = self.makePokemonDetailModel(title: "Name", detail: "\(pokemon.name.capitalized)")
+        let heightViewModel = self.makePokemonDetailModel(title: "Height", detail: "\(pokemon.height) сm")
+        let weightViewModel = self.makePokemonDetailModel(title: "Weight", detail: "\(pokemon.weight) g")
+        
+        viewModels.append(contentsOf: [nameViewModel, heightViewModel, weightViewModel])
+        
+        return DefaultTableSectionModel(cells: viewModels, header: nil, footer: nil)
+    }
+    
+    func makeSpriteSectionModel(pokemon: Pokemon) -> TableSectionModel {
+        let spriteViewModel = self.makePokemonSpritesModel(currentValue: 0, spriteURLs: pokemon.sprites.allValues)
+        return DefaultTableSectionModel(cells: [spriteViewModel], header: nil, footer: nil)
+    }
+}
+
+// MARK: Cells.
 private extension PokemonProfileViewModel {
     
     func makePokemonDetailModel(title: String, detail: String) -> TableCellModel {
         let model = PokemonDetailCellViewModel(title: title, detail: detail, cellSelectionHandler: nil)
+        return model
+    }
+    
+    func makePokemonSpritesModel(currentValue: Int, spriteURLs: [URL]) -> TableCellModel {
+        let model = SpriteViewerCellViewModel(currentValue: currentValue, spriteURLs: spriteURLs)
         return model
     }
 }
