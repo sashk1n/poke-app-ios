@@ -9,10 +9,10 @@
 import UIKit
 
 private struct Constants {
-    static let font: UIFont = UIFont.systemFont(ofSize: 15)
+    static let font: UIFont = UIFont.systemFont(ofSize: 16)
     static let textColor: UIColor = UIColor.black    
     static let horizontalOffset: CGFloat = 16.0
-    static let imageSize: CGSize = CGSize(width: 50, height: 50)
+    static let imageSize: CGSize = CGSize(width: 55, height: 55)
 }
 
 final class PokemonTableViewCell: TableViewCell {
@@ -61,12 +61,6 @@ final class PokemonTableViewCell: TableViewCell {
         self.avatarImageView.setImage(from: model.imageURL)
         
         self.setNeedsLayout()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        self.avatarImageView.image = nil
     }
     
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {

@@ -9,7 +9,7 @@
 import UIKit
 
 private struct Constants {
-    static let imageSize: CGSize = CGSize(width: 55.0, height: 55.0)
+    static let imageSize: CGSize = CGSize(width: 95.0, height: 95.0)
     static let verticalOffset: CGFloat = 8.0
     static let horizontalOffset: CGFloat = 16.0
 }
@@ -38,9 +38,9 @@ final class SpriteViewerTableViewCell: TableViewCell {
                                             height: Constants.imageSize.height)
         self.spriteImageView.center.x = self.contentView.center.x
         
-        self.slider.frame = CGRect(x: Constants.horizontalOffset, 
+        self.slider.frame = CGRect(x: 2 * Constants.horizontalOffset, 
                                    y: self.spriteImageView.bounds.maxY + Constants.verticalOffset, 
-                                   width: self.contentView.bounds.width - 2 * Constants.horizontalOffset, 
+                                   width: self.contentView.bounds.width - 4 * Constants.horizontalOffset, 
                                    height: 50)
     }
     
@@ -66,7 +66,7 @@ final class SpriteViewerTableViewCell: TableViewCell {
     }
     
     override class func height(for viewModel: TableCellModel, tableView: UITableView) -> CGFloat {
-        return 130.0
+        return 150.0
     }
 }
 

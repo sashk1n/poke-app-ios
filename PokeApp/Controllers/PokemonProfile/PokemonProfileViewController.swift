@@ -56,8 +56,6 @@ final class PokemonProfileViewController: UIViewController {
     }
     
     func setupNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = Constants.title
     }
     
@@ -67,7 +65,7 @@ final class PokemonProfileViewController: UIViewController {
         self.view.addSubview(self.tableView)        
         self.tableViewController.didMove(toParent: self)
         
-        self.tableView.backgroundColor = UIColor.white
+        self.tableView.backgroundColor = nil
         self.tableView.contentInsetAdjustmentBehavior = .never
         
         self.tableView.register(cellClass: PokemonDetailTableViewCell.self)

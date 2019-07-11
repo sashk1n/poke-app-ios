@@ -53,8 +53,8 @@ private extension PokemonProfileViewModel {
         var viewModels = [TableCellModel]()
         
         let nameViewModel = self.makePokemonDetailModel(title: "Name", detail: "\(pokemon.name.capitalized)")
-        let heightViewModel = self.makePokemonDetailModel(title: "Height", detail: "\(pokemon.height) сm")
-        let weightViewModel = self.makePokemonDetailModel(title: "Weight", detail: "\(pokemon.weight) g")
+        let heightViewModel = self.makePokemonDetailModel(title: "Height", detail: "\(pokemon.height) inch")
+        let weightViewModel = self.makePokemonDetailModel(title: "Weight", detail: "\(pokemon.weight) fun")
         
         viewModels.append(contentsOf: [nameViewModel, heightViewModel, weightViewModel])
         

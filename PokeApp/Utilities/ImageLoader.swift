@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  UIImageView.swift
 //  PokeApp
 //
 //  Created by marcenuk on 09/07/2019.
@@ -7,10 +7,6 @@
 //
 
 import UIKit
-
-private class ImageCache {
-    static let shared = NSCache<AnyObject, AnyObject>()
-}
 
 extension UIImageView {
     

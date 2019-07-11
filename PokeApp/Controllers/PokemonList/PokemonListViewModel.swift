@@ -9,15 +9,12 @@
 import Foundation
 import Domain
 
-private struct Constants {
-    static let title: String = "Pokemon profile"
-}
-
 final class PokemonListViewModel {
     
-    var onFirstPage: (([TableCellModel]) -> Void)?
-    var onNextPage: (([TableCellModel]) -> Void)?
-    var onError: ((Error) -> Void)?
+    var onChangeRefreshingState: SingleHandler<Bool>?
+    var onFirstPage: SingleHandler<[TableCellModel]>?
+    var onNextPage: SingleHandler<[TableCellModel]>?
+    var onError: SingleHandler<Error>?
     var onOutOfPages: ActionHandler?
     var onSelectPokemon: StringHandler?
     
@@ -31,12 +28,14 @@ final class PokemonListViewModel {
     }
     
     func fetchFirstPage() {
+        self.onChangeRefreshingState?(true)
         self.isLoading = true
         self.service.firstPage(completion: { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
             
+            self?.onChangeRefreshingState?(false)
             self?.isLoading = false
             switch result {
             case .success(let page):
@@ -70,6 +69,7 @@ final class PokemonListViewModel {
             guard let strongSelf = self else {
                 return
             }
+            self?.onChangeRefreshingState?(false)
             self?.isLoading = false
             
             switch result {

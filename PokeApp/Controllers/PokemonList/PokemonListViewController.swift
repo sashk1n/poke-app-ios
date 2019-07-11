@@ -26,6 +26,12 @@ final class PokemonListViewController: UIViewController {
         return self.tableViewController.tableView
     }
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return view 
+    }()
+    
     init() {
         self.tableViewController = UITableViewController(style: .plain)
         self.tableAdapter = TableAdapter(tableView: self.tableViewController.tableView)
@@ -40,6 +46,7 @@ final class PokemonListViewController: UIViewController {
         super.viewDidLoad()
         
         self.setup()
+        
         self.viewModel.fetchFirstPage()
     }
     
@@ -66,6 +73,8 @@ final class PokemonListViewController: UIViewController {
         self.view.addSubview(self.tableView)        
         self.tableViewController.didMove(toParent: self)
         
+        self.tableViewController.refreshControl = self.refreshControl
+        
         self.tableView.backgroundColor = UIColor.white
         self.tableView.contentInsetAdjustmentBehavior = .never
         
@@ -78,6 +87,9 @@ final class PokemonListViewController: UIViewController {
     }
     
     func setupBindings() {
+        self.viewModel.onChangeRefreshingState = { [weak self] refreshing in
+            refreshing ? self?.refreshControl.beginRefreshing() : self?.refreshControl.endRefreshing()
+        }
         self.viewModel.onFirstPage = { [weak self] models in
             let sectionModel = DefaultTableSectionModel(cells: models, header: nil, footer: nil)
             self?.tableAdapter.update(viewModels: [sectionModel])
@@ -105,5 +117,13 @@ final class PokemonListViewController: UIViewController {
                                       y: self.view.safeAreaInsets.top, 
                                       width: self.view.safeAreaLayoutGuide.layoutFrame.width, 
                                       height: self.view.safeAreaLayoutGuide.layoutFrame.height)
+    }
+}
+
+private extension PokemonListViewController {
+    
+    @objc
+    func refresh(sender: UIRefreshControl) {
+        self.viewModel.fetchFirstPage()
     }
 }
