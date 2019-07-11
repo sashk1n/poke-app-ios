@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class NetworkManager {
+public final class NetworkClient {
     
     public class func request<T: Codable>(route: NetworkRoute, 
                                           completion: @escaping (Result<T, Error>) -> ()) {

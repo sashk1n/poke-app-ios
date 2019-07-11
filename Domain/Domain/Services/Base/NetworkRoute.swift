@@ -22,17 +22,17 @@ public protocol NetworkRoute {
     var method: String  { get }
 }
 
-extension NetworkRoute {
+public extension NetworkRoute {
     
-    public var scheme: String {
+    var scheme: String {
         return ApiConstants.scheme
     }
     
-    public var host: String {
+    var host: String {
         return ApiConstants.host
     }
     
-    public var parameters: [URLQueryItem]? {
+    var parameters: [URLQueryItem]? {
         return nil
     }
 }
