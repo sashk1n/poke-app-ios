@@ -8,10 +8,19 @@
 
 import Foundation
 
+public enum NetworkError: Error {
+  case emptyUrl
+  case emptyResponse
+  case emptyData
+  case decodingError
+}
+
+public typealias NetworkHandler<T> = (Result<T, Error>) -> ()
+
 public final class NetworkClient {
-    
+
     public class func request<T: Codable>(route: NetworkRoute, 
-                                          completion: @escaping (Result<T, Error>) -> ()) {
+                                          completion: @escaping NetworkHandler<T>) {
         var components = URLComponents()
         components.scheme = route.scheme
         components.host = route.host
@@ -19,7 +28,8 @@ public final class NetworkClient {
         components.queryItems = route.parameters
         
         guard let url = components.url else { 
-            return 
+            completion(.failure(NetworkError.emptyUrl))
+            return
         }
         
         var urlRequest = URLRequest(url: url)
@@ -30,9 +40,11 @@ public final class NetworkClient {
         
         let session = URLSession(configuration: .default)
         let dataTask = session.dataTask(with: urlRequest) { data, response, error in
-            guard error == nil else {
-                error.map { completion(.failure($0)) }
-                print(String(describing: error?.localizedDescription))
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                    print(String(describing: error.localizedDescription))
+                }
                 return
             }
             
@@ -40,9 +52,15 @@ public final class NetworkClient {
             //debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {
+                DispatchQueue.main.async {
+                    completion(.failure(NetworkError.emptyResponse))
+                }
                 return
             }
             guard let data = data else {
+                DispatchQueue.main.async {
+                    completion(.failure(NetworkError.emptyData))
+                }
                 return
             }
             

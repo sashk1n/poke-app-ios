@@ -8,21 +8,23 @@
 
 import Foundation
 
+public typealias ListHandler = (Result<Page, Error>) -> ()
+
 public protocol GetPokemonListService {
-    
-    func firstPage(completion: @escaping ((Result<Page, Error>) -> ()))
-    
-    func nextPage(nextPageUrl: URL, completion: @escaping ((Result<Page, Error>) -> ()))
+  // это два по сути одинаковых метода
+    func firstPage(completion: @escaping ListHandler)
+
+    func nextPage(nextPageUrl: URL, completion: @escaping ListHandler)
 }
 
 public class GetPokemonListServiceImp: GetPokemonListService {
     
-    public func firstPage(completion: @escaping ((Result<Page, Error>) -> ())) {
+    public func firstPage(completion: @escaping ListHandler) {
         let route = GetPokemonListRoute()
         NetworkClient.request(route: route, completion: completion)
     }
     
-    public func nextPage(nextPageUrl: URL, completion: @escaping ((Result<Page, Error>) -> ())) {
+    public func nextPage(nextPageUrl: URL, completion: @escaping ListHandler) {
         let route = GetPokemonListRoute(nextPageURL: nextPageUrl)
         NetworkClient.request(route: route, completion: completion)
     }

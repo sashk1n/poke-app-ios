@@ -52,11 +52,15 @@ final class PokemonListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
+      // зачем это делать в методе viewWillAppear?
+      // каждый раз, когда ты будешь переходить с экрана Детали на экран Список, будет вызываться этот метод.
+      // setupNavigationBar надо перенести в setup()
         self.setupNavigationBar()
     }
     
     func setup() {
+      // зачем везде писать self?! из контекста же ясно, к чему это относится
         self.view.backgroundColor = UIColor.white
         
         self.setupTable()
@@ -87,6 +91,8 @@ final class PokemonListViewController: UIViewController {
     }
     
     func setupBindings() {
+      // VC держит refreshControl => время жизни refreshControl больше или меньше VC?
+      // мб здесь и ниже нужно использовать unowned self?
         self.viewModel.onStartLoading = { [weak self] in
             self?.refreshControl.beginRefreshing()
         }

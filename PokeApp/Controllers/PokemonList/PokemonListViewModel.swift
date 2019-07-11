@@ -18,19 +18,23 @@ final class PokemonListViewModel {
     var onOutOfPages: ActionHandler?
     var onSelectPokemon: StringHandler?
     
-    private var nextPageURL: URL? = nil
-    private var isLoading: Bool = true
+    private var nextPageURL: URL? = nil // = nil здесь лишнее, оно уже по-умолчанию стоит
+    private var isLoading: Bool = true // мб все-таки false?
     
-    private var service: GetPokemonListService
+    private var service: GetPokemonListService // зачем var? если это let
     
     init(service: GetPokemonListService) {
         self.service = service
     }
-    
+
+  // то, о чем я и писал про сервис.
+  // объявление методов service.firstPage и service.nextPage приведет к тому, что fetchFirstPage и fetchNextPage станут одинаковыми
+  // но тогда почему не создать функцию f, в которую поместить общий код для обработки?
     func fetchFirstPage() {
         self.onStartLoading?()
         self.isLoading = true
         self.service.firstPage(completion: { [weak self] result in
+          // f(result)
             guard let strongSelf = self else {
                 return
             }
@@ -52,7 +56,7 @@ final class PokemonListViewModel {
             }
         })
     }
-    
+
     func fetchNextPage() {
         guard !self.isLoading else {
             return
