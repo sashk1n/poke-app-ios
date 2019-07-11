@@ -87,8 +87,11 @@ final class PokemonListViewController: UIViewController {
     }
     
     func setupBindings() {
-        self.viewModel.onChangeRefreshingState = { [weak self] refreshing in
-            refreshing ? self?.refreshControl.beginRefreshing() : self?.refreshControl.endRefreshing()
+        self.viewModel.onStartLoading = { [weak self] in
+            self?.refreshControl.beginRefreshing()
+        }
+        self.viewModel.onStopLoading = { [weak self] in
+            self?.refreshControl.endRefreshing()
         }
         self.viewModel.onFirstPage = { [weak self] models in
             let sectionModel = DefaultTableSectionModel(cells: models, header: nil, footer: nil)
@@ -120,6 +123,7 @@ final class PokemonListViewController: UIViewController {
     }
 }
 
+// MARK: Actions
 private extension PokemonListViewController {
     
     @objc

@@ -10,8 +10,8 @@ import Foundation
 import Domain
 
 final class PokemonListViewModel {
-    
-    var onChangeRefreshingState: SingleHandler<Bool>?
+    var onStartLoading: ActionHandler?
+    var onStopLoading: ActionHandler?
     var onFirstPage: SingleHandler<[TableCellModel]>?
     var onNextPage: SingleHandler<[TableCellModel]>?
     var onError: SingleHandler<Error>?
@@ -28,14 +28,14 @@ final class PokemonListViewModel {
     }
     
     func fetchFirstPage() {
-        self.onChangeRefreshingState?(true)
+        self.onStartLoading?()
         self.isLoading = true
         self.service.firstPage(completion: { [weak self] result in
             guard let strongSelf = self else {
                 return
             }
             
-            self?.onChangeRefreshingState?(false)
+            self?.onStopLoading?()
             self?.isLoading = false
             switch result {
             case .success(let page):
@@ -69,7 +69,6 @@ final class PokemonListViewModel {
             guard let strongSelf = self else {
                 return
             }
-            self?.onChangeRefreshingState?(false)
             self?.isLoading = false
             
             switch result {

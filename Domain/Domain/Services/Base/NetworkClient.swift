@@ -25,6 +25,7 @@ public final class NetworkClient {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = route.method
         
+        // Log requests.
         print("\(route.method): \(url)")
         
         let session = URLSession(configuration: .default)
@@ -35,7 +36,7 @@ public final class NetworkClient {
                 return
             }
             
-            // TODO: Remove
+            // TODO: Uncomment for debug.
             //debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {
