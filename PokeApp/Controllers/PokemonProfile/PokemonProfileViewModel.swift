@@ -14,9 +14,11 @@ struct PokemonProfileArgs {
 }
 
 final class PokemonProfileViewModel {
-    
+    var onStartLoading: ActionHandler?
+    var onStopLoading: ActionHandler?
     var onUpdateSpriteModel: SingleHandler<TableCellModel>?
     var onProfileData: SingleHandler<[TableSectionModel]>?
+    var onError: SingleHandler<Error>?
     
     private var name: String
     
@@ -28,7 +30,10 @@ final class PokemonProfileViewModel {
     }
     
     func fetchProfile() {
+        self.onStopLoading?()
         self.service.get(byName: self.name, completion: { [weak self] result in
+            self?.onStopLoading?()
+            
             switch result {
             case .success(let pokemon):
                 guard let strongSelf = self else {
@@ -40,7 +45,7 @@ final class PokemonProfileViewModel {
                 sections.append(strongSelf.makeSpriteSectionModel(pokemon: pokemon))
                 self?.onProfileData?(sections)
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.onError?(error)
             }
         })
     }
@@ -53,8 +58,8 @@ private extension PokemonProfileViewModel {
         var viewModels = [TableCellModel]()
         
         let nameViewModel = self.makePokemonDetailModel(title: "Name", detail: "\(pokemon.name.capitalized)")
-        let heightViewModel = self.makePokemonDetailModel(title: "Height", detail: "\(pokemon.height) сm")
-        let weightViewModel = self.makePokemonDetailModel(title: "Weight", detail: "\(pokemon.weight) g")
+        let heightViewModel = self.makePokemonDetailModel(title: "Height", detail: "\(pokemon.height) inch")
+        let weightViewModel = self.makePokemonDetailModel(title: "Weight", detail: "\(pokemon.weight) fun")
         
         viewModels.append(contentsOf: [nameViewModel, heightViewModel, weightViewModel])
         

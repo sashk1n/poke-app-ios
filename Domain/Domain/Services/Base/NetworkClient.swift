@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class NetworkManager {
+public final class NetworkClient {
     
     public class func request<T: Codable>(route: NetworkRoute, 
                                           completion: @escaping (Result<T, Error>) -> ()) {
@@ -25,6 +25,7 @@ public final class NetworkManager {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = route.method
         
+        // Log requests.
         print("\(route.method): \(url)")
         
         let session = URLSession(configuration: .default)
@@ -35,7 +36,7 @@ public final class NetworkManager {
                 return
             }
             
-            // TODO: Remove
+            // TODO: Uncomment for debug.
             //debugPrint(data?.prettyPrintedJSONString ?? "nil")
             
             guard response != nil else {

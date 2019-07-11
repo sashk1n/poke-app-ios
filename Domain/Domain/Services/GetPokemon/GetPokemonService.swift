@@ -19,12 +19,12 @@ public class GetPokemonServiceImp: GetPokemonService {
     
     public func get(byId id: Int, completion: @escaping (Result<Pokemon, Error>) -> ()) {
         let route = GetPokemonRoute(id: id)
-        NetworkManager.request(route: route, completion: completion)
+        NetworkClient.request(route: route, completion: completion)
     }
     
     public func get(byName name: String, completion: @escaping (Result<Pokemon, Error>) -> ()) {
         let route = GetPokemonRoute(name: name)
-        NetworkManager.request(route: route, completion: completion)
+        NetworkClient.request(route: route, completion: completion)
     }
     
     public init() {}

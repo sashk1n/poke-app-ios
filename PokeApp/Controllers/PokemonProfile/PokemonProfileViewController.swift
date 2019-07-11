@@ -25,6 +25,12 @@ final class PokemonProfileViewController: UIViewController {
         return self.tableViewController.tableView
     }
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let view = UIRefreshControl()
+        view.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return view 
+    }()
+    
     init() {
         self.tableViewController = UITableViewController(style: .grouped)
         self.tableAdapter = TableAdapter(tableView: self.tableViewController.tableView)
@@ -56,8 +62,6 @@ final class PokemonProfileViewController: UIViewController {
     }
     
     func setupNavigationBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.title = Constants.title
     }
     
@@ -67,7 +71,9 @@ final class PokemonProfileViewController: UIViewController {
         self.view.addSubview(self.tableView)        
         self.tableViewController.didMove(toParent: self)
         
-        self.tableView.backgroundColor = UIColor.white
+        self.tableViewController.refreshControl = self.refreshControl
+        
+        self.tableView.backgroundColor = nil
         self.tableView.contentInsetAdjustmentBehavior = .never
         
         self.tableView.register(cellClass: PokemonDetailTableViewCell.self)
@@ -75,6 +81,12 @@ final class PokemonProfileViewController: UIViewController {
     }
     
     func setupBindings() {
+        self.viewModel.onStartLoading = { [weak self] in
+            self?.refreshControl.beginRefreshing()
+        }
+        self.viewModel.onStopLoading = { [weak self] in
+            self?.refreshControl.endRefreshing()
+        }
         self.viewModel.onProfileData = { [weak self] sectionsModels in
             self?.tableAdapter.update(viewModels: sectionsModels)
         }
@@ -90,5 +102,14 @@ final class PokemonProfileViewController: UIViewController {
                                       y: self.view.safeAreaInsets.top, 
                                       width: self.view.safeAreaLayoutGuide.layoutFrame.width, 
                                       height: self.view.safeAreaLayoutGuide.layoutFrame.height)
+    }
+}
+
+// MARK: Actions
+private extension PokemonProfileViewController {
+    
+    @objc
+    func refresh(sender: UIRefreshControl) {
+        self.viewModel.fetchProfile()
     }
 }

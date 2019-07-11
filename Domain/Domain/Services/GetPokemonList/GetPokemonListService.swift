@@ -19,12 +19,12 @@ public class GetPokemonListServiceImp: GetPokemonListService {
     
     public func firstPage(completion: @escaping ((Result<Page, Error>) -> ())) {
         let route = GetPokemonListRoute()
-        NetworkManager.request(route: route, completion: completion)
+        NetworkClient.request(route: route, completion: completion)
     }
     
     public func nextPage(nextPageUrl: URL, completion: @escaping ((Result<Page, Error>) -> ())) {
         let route = GetPokemonListRoute(nextPageURL: nextPageUrl)
-        NetworkManager.request(route: route, completion: completion)
+        NetworkClient.request(route: route, completion: completion)
     }
     
     public init() {}
